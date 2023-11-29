@@ -1,4 +1,4 @@
-<?php
+?php
 
 
        $pokemons_api =  file_get_contents('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
@@ -65,7 +65,8 @@
         <?php for($i = 0; $i < 20; $i++): ?>
         <div class="pokemon">
 
-            <img src="<?= pokemons['results'][$i]['sprites']['other']['dream_world']['']https://assets.pokemon.com/assets/cms2/img/pokedex/full/039.png" alt="Jigglypuff" width="200px">
+            <img src="<?= pokemons['results'][$i]['sprites']['other']['dream_world']['front_default'] ?>
+            alt="" width="200px">
 
             <h1> <?= $pokemons['results'] [$i] ['name']?> </h1>
             <p>peso: 0.8</p>
