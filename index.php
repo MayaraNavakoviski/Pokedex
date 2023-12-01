@@ -1,18 +1,22 @@
-?php
+<?php
+
+    $pokemons_api = file_get_contents('https://pokeapi.co/api/v2/pokemon');
+    $pokemons = json_decode($pokemons_api, true);
+
+    for ($i=0; $i < 20; $i++) { 
+        $pokemon = $pokemons['results'][$i];
 
 
-       $pokemons_api =  file_get_contents('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
-       $pokemons =json_decode ($pokemons_api, true);
+        $todas_infos_api = file_get_contents($pokemon['url']);
+        $pokemons['results'][$i] = json_decode($todas_infos_api, true);
+    }
 
-       for($i = 0; $i < 20; $i++){
-            $pokemon = $pokemons['results']['$i'];
-       }
+    // $dados_em_texto = file_get_contents("https://pokeapi.co/api/v2/pokemon/{$nome}");
 
-       $todas_infos_api =  file_get_contents($pokemon ['url']);
-       $pokemons ['results'][$i] = json_decode ($todas_infos_api, true);
+    // $pokemon = json_decode($dados_em_texto, true);
+
 
 ?>
-
 
 
 <html>
@@ -24,26 +28,29 @@
     <style>
 
         #pesquisa {
-            
-            background: #c92626;
+
+            background: #c92626 ;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             padding: 20px;
             text-align: center;
+    
+
+
         }
 
         .pokemon {
             width: 20%;
             border: solid 2px #555;
-            padding: 15px;/* margem interna  */
+            padding: 15px; /* margem interna */
             margin: 10px 10px 10px 10px;
             float: left;
             text-align: center;
-            margin: 1% ;
-            
+
         }
 
         .pokemon img {
-            max-width: 100%;
+            max-widht: 100%;
+            height: 150px;
         }
 
     </style>
@@ -51,33 +58,42 @@
 
 </head>
 
-<body>
+    <body>
+    
+        <div id="Pesquisa">
 
-    <div id="pesquisa" >
-        <form>
-            <input type="text" placeholder="Digite um Pokémon" >
-            <input type="submit" value="buscar" >
-        </form>
-    </div>
+            <form>
 
-    <div id="pokemons">
+                <input type = "text" placeholder = "Digite um Pokémon">
+                <input type = "submit" value = "Buscar">
+
+            </form>
+
+        </div>
+
+        <div id="Pokemons">
 
         <?php for($i = 0; $i < 20; $i++): ?>
-        <div class="pokemon">
 
-            <img src="<?= pokemons['results'][$i]['sprites']['other']['dream_world']['front_default'] ?>
-            alt="" width="200px">
+        
 
-            <h1> <?= $pokemons['results'] [$i] ['name']?> </h1>
-            <p>peso: 0.8</p>
-            <p>altura 0.8</p>
+            <div class="Pokemon">
+
+                <img src="<?= $pokemons['results'][$i]['sprites']['other']['dream_world']['front_default']?>" alt="Snorlax" width= "200px">
+
+                <h1><?=  $pokemons['results'][$i]['name'] ?></h1>
+                <p>peso: 460.0 kg</p>
+                <p>altura: 2.1 m</p>
+
+
+            </div>
+
+            <?php endfor; ?>
+
+
         </div>
-        <?php endfor; ?>
 
 
-    </div>
 
-
-    
-</body>
+    </body>
 </html>
