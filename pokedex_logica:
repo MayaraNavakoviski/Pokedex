@@ -1,26 +1,32 @@
-<?php 
+<?php
 
-//    $nome = readline("Qual o seu pokemon?");
 
-   $short = "p";
+     $short = "p";
 
-   $long = [
-     "pokemon:"
-   ];
+     $long = [
+         "pokemon:"
+      ];
 
-  $options = getopt($short, $long);
+     $options = getopt($short, $long);
 
-  $nome = $options['pokemon'];
+     $nome = $options['pokemon'];
 
-  $dados_em_texto = file_get_contents("https://pokeapi.co/api/v2/pokemon/{$nome}");
 
-   $pokemon = json_decode($dados_em_texto, true);
+     $nome = readline("Qual o seu pokemon?");
 
-   print(strtoupper($pokemon['name'])  . "\n");
-   print("altura: " . $pokemon['height'] . "\n");
-   print("peso: " . $pokemon['weight'] . "\n");
-   print("movimentos:\n");
-   
-   foreach ($pokemon['moves'] as $move) {
-        print(" - " . $move['move']['name'] . "\n");
-   }
+     $dados_em_texto = file_get_contents("https://pokeapi.co/api/v2/pokemon/{$nome}");
+
+     $pokemon = json_decode($dados_em_texto, true);
+
+     print (strtoupper($pokemon['name']) . "\n");
+     print " " . "\n";
+     print ("altura: " . $pokemon['height'] . "\n");
+     print ("peso: " . $pokemon['weight'] . "\n");
+
+     foreach ($pokemon['moves'] as $move) {
+        print ("movimentos: " . $move['move']['name']. "\n");
+
+    }
+
+
+    print ("movimentos: " . $pokemon['moves'][0]['move']['name']. "\n");
