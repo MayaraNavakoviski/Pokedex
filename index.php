@@ -11,6 +11,21 @@
         $pokemons['results'][$i] = json_decode($todas_infos_api, true);
     }
 
+    
+    if(isset($_GET['campo_busca'])){
+
+        $encontrados = [];
+        
+        foreach ($pokemon['results'] as $poke) {
+            if (str_contains($poke['name'], $_GET['campo_busca'])){
+                $encontrados[] = $poke;
+        }
+    }
+
+        $pokemons = $encontrados;
+}
+    
+
     // $dados_em_texto = file_get_contents("https://pokeapi.co/api/v2/pokemon/{$nome}");
 
     // $pokemon = json_decode($dados_em_texto, true);
@@ -22,20 +37,29 @@
 <html>
 
 <head>
-    <title>Pokedex</title>
+    <title>POKEDEX</title>
 
 
     <style>
 
         #pesquisa {
 
-            background: #c92626 ;
+            background: #c92626  ;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             padding: 20px;
             text-align: center;
-    
+        }
 
+        #input [type ="text"] {
+            width: 300px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-radius: 20px;
+        }
 
+        #input [type ="submit"] {
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
 
         .pokemon {
@@ -45,6 +69,7 @@
             margin: 10px 10px 10px 10px;
             float: left;
             text-align: center;
+            background: #ffff ;
 
         }
 
@@ -62,9 +87,9 @@
     
         <div id="Pesquisa">
 
-            <form>
+            <form method="get">
 
-                <input type = "text" placeholder = "Digite um Pokémon">
+                <input type = "text" name="campo_busca" placeholder = "Digite um Pokémon">
                 <input type = "submit" value = "Buscar">
 
             </form>
@@ -82,8 +107,8 @@
                 <img src="<?= $pokemons['results'][$i]['sprites']['other']['dream_world']['front_default']?>" alt="Snorlax" width= "200px">
 
                 <h1><?=  $pokemons['results'][$i]['name'] ?></h1>
-                <p>peso: 460.0 kg</p>
-                <p>altura: 2.1 m</p>
+                <p>peso: <?=  $pokemons['results'][$i]['weight']/10 ?>kg</p>
+                <p>altura: <?=  $pokemons['results'][$i]['height']/10 ?>m</p>
 
 
             </div>
